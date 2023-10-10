@@ -12,7 +12,7 @@
 //
 //	Clause<k> clauses[n] = ... ;
 //	bool isSolvable1 = satisfiable(n, k, t);
-//	bool isSolvabke2 = satisfiable(clauses);
+//	bool isSolvable = satisfiable(clauses);
 //
 // where
 //
@@ -28,6 +28,40 @@
 // renders all of the clauses true simultaneously,
 // or will indicate that no solution exists.
 
+// How the algorithm works:
+//
+// For any satisfiability problem in conjunctive 
+// normal form of n unique clauses each of k literals 
+// totalling t different literals, then there are
+// exactly n assignments of truth that make the
+// expression false, namely any of the assignments
+// which directly negate any of the clauses.
+//
+// There are also (t k) possible different clauses, 
+// where (* *) is the binomial coefficient operator such
+// that (a b) = a! / k!(n - k)!. The binomial coefficient
+// can also be more efficiently computed as the product
+// of 1 / k! and (a - x) for all integer values
+// -1 < x < k.
+//
+// By the pigeon-hole principle, if there are as many
+// incorrect answers as possible answers, then, since
+// all answers are incorrect, the statement is not
+// satisfiable.
+//
+// Conversely, this means that if there are FEWER
+// incorrect answers than possible answers, then
+// AT LEAST one of the possible answers is not
+// incorrect, thus correct, meaning that the statement
+// is satisfiable.
+//
+// So, it's trivial to reduce the satisfiability
+// problem in question to checking whether (t k) > n.
+//
+// If (t k) can be computed efficiently (i.e. in
+// polynomial time), then P=NP since Boolean satisfiability
+// is NP-complete.
+
 template <int k>
 struct Clause {
 	int ids[k];
@@ -35,5 +69,24 @@ struct Clause {
 };
 
 bool satisfiable(int n, int k, int t) {
-	
+	// Compute k!.
+	int kfact = 1;
+	for (int a = 1; a <= k; a++) {
+		kfact *= a;
+	}
+
+	// Compute the product of all (t - x) for -1 < x < k.
+	int result = 1;
+	for (int x = 0; x < k; x++) {
+		result *= t - x;
+	}
+
+	// Compute the binomial coefficient using the quotient 
+	// of all (t - x) by k!.
+	int binomialCoefficient = result / kfact;
+
+	// If the binomial coefficient is greater than the number
+	// of incorrect solutions, then there exists at least
+	// one correct solution and the statement is satisfiable.
+	return (binomialCoefficient > n);
 }
