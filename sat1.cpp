@@ -11,8 +11,8 @@
 // Syntax:
 //
 //	Clause<k> clauses[n] = ... ;
-//	bool isSolvable1 = satisfiable(n, k, t);
-//	bool isSolvable = satisfiable(clauses);
+//	bool isSolvable1 = satisfiable<n, k>(t);
+//	bool isSolvable2 = satisfiable<n, k>(clauses);
 //
 // where
 //
@@ -68,7 +68,11 @@ struct Clause {
 	bool invs[k];
 };
 
-bool satisfiable(int n, int k, int t) {
+// Given the total number of variables,
+// is an n-k-satisfiability problem
+// satisfiable?
+template <int n, int k>
+bool satisfiable(int t) {
 	// Compute k!.
 	int kfact = 1;
 	for (int a = 1; a <= k; a++) {
@@ -89,4 +93,22 @@ bool satisfiable(int n, int k, int t) {
 	// of incorrect solutions, then there exists at least
 	// one correct solution and the statement is satisfiable.
 	return (binomialCoefficient > n);
+}
+
+// Given the clauses of an n-k-
+// -satisfiability, is the problem
+// satisfiable?
+template <int n, int k>
+bool satisfiable(Clause<k> clauses[n]) {
+	int t = 0;
+	Clause<k> clause;
+	for (int i = 0; i < n; i++) {
+		clause = clauses[i];
+		for (int j = 0; j < k; j++) {
+			if (clause.ids[j] > t) {
+				t = clause.ids[j];
+			}
+		}
+	}
+	return (satisfiable<n, k>(t));
 }
