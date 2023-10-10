@@ -66,7 +66,7 @@
 // of n clauses each containing k literals totalling
 // t distinct literals in normal conjunctive form,
 // there exists an assignment of truth to the t variables
-// of the statement if (t k) > n.
+// of the statement if and only if (t k) > n.
 
 using namespace std;
 
