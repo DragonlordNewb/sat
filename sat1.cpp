@@ -1,7 +1,15 @@
 using namespace std;
 
-template <int k>
 struct Clause {
-	int ids[k];
-	bool invs[k];
+	int x;
+	int y;
+	int z;
+	bool xinv;
+	bool yinv;
+	bool zinv;
+};
+
+template <int n, int k>
+Clause<k> solve(Clause<k> clauses[n]) {
+	const int
 }
