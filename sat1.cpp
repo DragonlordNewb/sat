@@ -62,6 +62,12 @@
 // polynomial time), then P=NP since Boolean satisfiability
 // is NP-complete.
 
+// This is Lux's Theorem: for any valid statement
+// of n clauses each containing k literals totalling
+// t distinct literals in normal conjunctive form,
+// there exists an assignment of truth to the t variables
+// of the statement if (t k) > n.
+
 using namespace std;
 
 template <int k>
