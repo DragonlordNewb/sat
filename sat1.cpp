@@ -11,7 +11,8 @@
 // Syntax:
 //
 //	Clause<k> clauses[n] = ... ;
-//	Solution<t> solution = solve<n, k, t>(clauses);
+//	bool isSolvable1 = satisfiable(n, k, t);
+//	bool isSolvabke2 = satisfiable(clauses);
 //
 // where
 //
@@ -19,6 +20,9 @@
 //	n is the number of clauses,
 //	t is the total number of distinct literals.
 //
+// isSolvable (1 or 2) will be true if there is an 
+// assignment of truth to the variables that renders 
+// all of the clauses true simultaneously.
 // solution will contain a clause representing
 // an assignment of truth to the variables that
 // renders all of the clauses true simultaneously,
@@ -30,12 +34,6 @@ struct Clause {
 	bool invs[k];
 };
 
-template <int k>
-struct Solution {
-	bool solved;
-	Clause<k> sol;
-};
-
-template <int n, int k, int t>
-Clause<t> solve(Clause<k> clauses[n]) {
+bool satisfiable(int n, int k, int t) {
+	
 }
