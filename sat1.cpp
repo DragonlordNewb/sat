@@ -62,6 +62,8 @@
 // polynomial time), then P=NP since Boolean satisfiability
 // is NP-complete.
 
+using namespace std;
+
 template <int k>
 struct Clause {
 	int ids[k];
@@ -111,4 +113,20 @@ bool satisfiable(Clause<k> clauses[n]) {
 		}
 	}
 	return (satisfiable<n, k>(t));
+}
+
+int main() {
+	std::cout << "1 = true, 0 = false" << std::endl;
+	
+	std::cout << "Is a problem";
+	std::cout << " with 5 variables and 3 clauses";
+	std::cout << " of 3 variables each solvable: ";
+	std::cout << satisfiable<3, 3>(5) << std::endl;
+
+	std::cout << "Is a problem";
+	std::cout << " with 3 variables and 6 clauses";
+	std::cout << " of 3 variables each solvable: ";
+	std::cout << satisfiable<6, 3>(3) << std::endl;
+
+	return 0;
 }
