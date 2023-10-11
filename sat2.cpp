@@ -85,9 +85,9 @@ bool satisfiable(Clause<k> clauses[n]) {
 	// zero, the number of nonzero values is equal to the 
 	// number of distinct variables.
 	//
-	// Time complexity: O(nk)
+	// Time complexity: O(nk) (polynomial time)
 	//
-	// Space complexity: O(1)
+	// Space complexity: O(1) (constant time)
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < k; j++) {
 			if (clauses[i].ids[j] != 0) {
@@ -122,7 +122,35 @@ bool satisfiable(Clause<k> clauses[n]) {
 	// nonzero.
 
 	// Actually exponentiating t is much more space-inefficient
-	// than just using a floored logarithm to check if
-	// t - log2 n > 0 which is the exact same as checking
-	// 2^t - n > 0
+	// than just checking if there are enough significant
+	// bits in n to equal or exceed 2^t. Logically if there
+	// are at least t significant bits then that means that n >= 2^t
+	// in which case 2^t - n <= 0.
+	//
+	// Shift n right until its value is zero, counting how
+	// many significant bits there are in the number.
+	//
+	// Time complexity: O(log n) (logarithmic time)
+	//
+	// Space complexity: O(1) (constant time)
+	while (n > 0) {
+		n = n >> 1;
+		t -= 1;
+		if (t == 0) {
+			// There are more than t significant
+			// bits in n, meaning that 2^t <= n.
+			//
+			// This means that 2^t <= n, and that
+			// there are no correct solutions to
+			// the problem.
+
+			return false;
+		}
+	}
+	// There are fewer than t significant bits in n, meaning that
+	// the incorrect solution space is less than the correct
+	// solution space and thus that there exists at least
+	// one correct solution.
+
+	return true;
 }
