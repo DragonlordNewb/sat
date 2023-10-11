@@ -120,4 +120,9 @@ bool satisfiable(Clause<k> clauses[n]) {
 	//
 	// All that's left is to check whether this number is
 	// nonzero.
+
+	// Actually exponentiating t is much more space-inefficient
+	// than just using a floored logarithm to check if
+	// t - log2 n > 0 which is the exact same as checking
+	// 2^t - n > 0
 }
