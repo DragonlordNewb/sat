@@ -1,25 +1,5 @@
-template <typename T, const n>
-bool satisfiable(T variables[n]) {
-
-	// Satisfiable if 2^t > n * 2^(t - k)
-	
-	int t = 0;
-	
-	for (int i = 0; i < n; i++) {
-		if (variables[i] == 0) {
-			continue;
-		}
-		
-		for (int j = i + 1; i < n; i++) {
-			if (variables[i] == variables[j]) {
-				variables[j] == 0;
-			}
-		}
-	}
-
-	for (int i = 0; i < n; i++) {
-		if (variables[i] != 0) {
-			t++;
-		}
-	}
-}
+// A tape consists of a few different symbols:
+//
+//	A positive integer refers to a variable of that index;
+//	A -1 is an OR operator; and
+//	A -2 is an AND operator.
